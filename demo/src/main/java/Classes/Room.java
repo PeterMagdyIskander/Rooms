@@ -16,6 +16,13 @@ public class Room {
         this.roomCreatorId = roomCreatorId;
     }
     
+    public Room(String id, List<Comment> comments, List<User> users, String roomCreatorId) {
+        this.id = id;
+        this.comments = comments;
+        this.users = users;
+        this.roomCreatorId = roomCreatorId;
+    }
+
     public String getId() {
         return id;
     }
