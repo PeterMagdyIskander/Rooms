@@ -1,6 +1,7 @@
-package Classes;
+package com.example.demo;
 
 import java.util.List;
+
 
 public class Room {
     private String id;
@@ -9,13 +10,9 @@ public class Room {
     private String roomCreatorId;
 
     
-    public Room(String id, String roomCreatorId) {
-        this.id = id;
-        this.comments = null;
-        this.users = null;
-        this.roomCreatorId = roomCreatorId;
+    public Room() {
     }
-    
+
     public Room(String id, List<Comment> comments, List<User> users, String roomCreatorId) {
         this.id = id;
         this.comments = comments;

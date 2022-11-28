@@ -1,18 +1,30 @@
-package Classes;
+package com.example.demo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Comment {
-    private String text;
+    @Id
     private String id;
-    private String parentCommentId;
-    private String userId;
-    private String roomId;
+    private String text;
+
+    private String parentCommentId;//relation
+    private String userId;//relation
+    private String roomId;//relation
     
+
+    
+    public Comment() {
+    }
+
     public Comment(String text, String id, String parentCommentId, String userId, String roomId) {
-        this.text = text;
         this.id = id;
-        this.parentCommentId = parentCommentId;
-        this.userId = userId;
-        this.roomId = roomId;
+        this.text = text;
+        
+        this.parentCommentId = parentCommentId;//relation
+        this.userId = userId;//relation
+        this.roomId = roomId;//relation
     }
     
     public String getText() {
