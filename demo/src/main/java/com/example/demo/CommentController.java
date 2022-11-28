@@ -26,7 +26,8 @@ public class CommentController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/comments")
-    public void addComment(@RequestBody Comment comment) {
+    public void addComment(@RequestBody Comment comment,@PathVariable String userId) {
+        comment.setUser(new Users("",userId));
         commentService.addComment(comment);
     }
 
