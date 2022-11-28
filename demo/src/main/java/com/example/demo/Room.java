@@ -6,14 +6,14 @@ import java.util.List;
 public class Room {
     private String id;
     private List<Comment> comments;
-    private List<User> users;
+    private List<Users> users;
     private String roomCreatorId;
 
     
     public Room() {
     }
 
-    public Room(String id, List<Comment> comments, List<User> users, String roomCreatorId) {
+    public Room(String id, List<Comment> comments, List<Users> users, String roomCreatorId) {
         this.id = id;
         this.comments = comments;
         this.users = users;
@@ -32,10 +32,10 @@ public class Room {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-    public List<User> getUsers() {
+    public List<Users> getUsers() {
         return users;
     }
-    public void setUsers(List<User> users) {
+    public void setUsers(List<Users> users) {
         this.users = users;
     }
     public String getRoomCreatorId() {

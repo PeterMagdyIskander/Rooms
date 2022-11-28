@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,8 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public List<Comment> getAllComments() {
-        return (List<Comment>) commentRepository.findAll();
+    public List<Comment> getAllComments(String userId) {
+        return (List<Comment>) commentRepository.findByUserId(userId);
     }
 
     public Comment getComment(String id) {

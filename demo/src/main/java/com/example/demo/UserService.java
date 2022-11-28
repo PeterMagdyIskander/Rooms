@@ -1,42 +1,36 @@
 package com.example.demo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class UserService {
 
-    // @Autowired
-    // private UserRepository userRepository;
-
-    private List<User> users=new ArrayList<User>(){
-        {
-            add(new User("PeterISK", "1", Arrays.asList("SEC"), Arrays.asList("SEC"),
-            Arrays.asList("123")));
-        }
-    };
+    @Autowired
+    private UserRepository userRepository;
 
 
-    public List<User> getAllUsers() {
-        return users;
-        // List<User> users=new ArrayList<>();
-        //  userRepository.findAll().forEach(users::add);
-        // return users;
+    public List<Users> getUsers() {
+        return (List<Users>) userRepository.findAll();
     }
 
-
-    public User getUser(String id) {
-        return users.stream().filter(user -> user.getId().equals(id)).findFirst().get();
+    public Users getUser(String id) {
+        return userRepository.findById(id).get();
     }
 
-    public void addUser(User user) {
-        users.add(user);
-        // userRepository.save(user);
+    public void addUser(Users user) {
+        userRepository.save(user);
     }
 
-    //TODO : DELETE User
+    public void updateUser(Users user){
+        userRepository.save(user);
+    }
+
+    public void deleteUser(String id){
+        userRepository.deleteById(id);
+    }
+  
 }

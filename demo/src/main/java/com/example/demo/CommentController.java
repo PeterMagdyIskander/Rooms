@@ -15,9 +15,9 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @RequestMapping("/comments")
-    public List<Comment> getAllComments() {
-        return commentService.getAllComments();
+    @RequestMapping("/users/{userId}/comments")
+    public List<Comment> getAllComments(@PathVariable String userId) {
+        return commentService.getAllComments(userId);
     }
 
     @RequestMapping("/comments/{id}")
@@ -25,15 +25,16 @@ public class CommentController {
         return commentService.getComment(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/comments")
+    @RequestMapping(method = RequestMethod.POST, value = "/users/{userId}/comments")
     public void addComment(@RequestBody Comment comment) {
         commentService.addComment(comment);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/comments")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}/comments/{id}")
     public void updateComment(@RequestBody Comment comment) {
         commentService.updateComment(comment);
     }
+    
     @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{id}")
     public void deleteComment(@PathVariable String id) {
         commentService.deleteComment(id);
