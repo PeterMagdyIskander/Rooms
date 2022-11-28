@@ -29,4 +29,13 @@ public class CommentController {
     public void addComment(@RequestBody Comment comment) {
         commentService.addComment(comment);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/comments")
+    public void updateComment(@RequestBody Comment comment) {
+        commentService.updateComment(comment);
+    }
+    @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{id}")
+    public void deleteComment(@PathVariable String id) {
+        commentService.deleteComment(id);
+    }
 }
