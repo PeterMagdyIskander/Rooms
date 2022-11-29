@@ -11,8 +11,16 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public List<Comment> getAllComments(String userId) {
+    public List<Comment> getAllCommentsByUser(String userId) {
         return (List<Comment>) commentRepository.findByUserId(userId);
+    }
+
+    public List<Comment> getAllCommentsByRoom(String roomId) {
+        return (List<Comment>) commentRepository.findByRoomId(roomId);
+    }
+
+    public List<Comment> getAllReplies(String commentId){
+        return (List<Comment>) commentRepository.findByCommentId(commentId);
     }
 
     public Comment getComment(String id) {

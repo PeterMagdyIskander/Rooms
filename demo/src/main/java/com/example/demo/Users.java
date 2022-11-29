@@ -2,6 +2,7 @@ package com.example.demo;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Users {
@@ -9,6 +10,9 @@ public class Users {
     @Id
     private String id;
     private String name;
+
+    @ManyToOne
+    private Room room;//MANY users to ONE room
 
     public Users() {
     }
@@ -32,5 +36,13 @@ public class Users {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

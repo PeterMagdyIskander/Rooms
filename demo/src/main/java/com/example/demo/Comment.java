@@ -12,7 +12,13 @@ public class Comment {
     private String text;
 
     @ManyToOne
-    private Users user;
+    private Users user;//MANY comments have ONE user
+
+    @ManyToOne
+    private Room room;//MANY comments have ONE room
+
+    @ManyToOne
+    private Comment comment;//MANY comments (replies) have ONE comment
 
     public Comment() {
     }
@@ -38,5 +44,18 @@ public class Comment {
     public void setUser(Users user) {
         this.user = user;
     }
+    public Room getRoom() {
+        return room;
+    }
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+    public Comment getComment() {
+        return comment;
+    }
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
 
+    
 }

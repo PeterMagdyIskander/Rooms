@@ -1,25 +1,29 @@
 package com.example.demo;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RoomService {
-    private List<Room> rooms = new ArrayList<Room>() {};
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     public List<Room> getAllRooms() {
-        return rooms;
+        return (List<Room>) roomRepository.findAll();
     }
 
     public Room getRoom(String id) {
-        return rooms.stream().filter(room -> room.getId().equals(id)).findFirst().get();
+        return roomRepository.findById(id).get();
     }
 
     public void addRoom(Room room) {
-        rooms.add(room);
+        roomRepository.save(room);
     }
 
-    //TODO : DELETE ROOM
+    public void deleteRoom(String id){
+        roomRepository.deleteById(id);
+    }
 }

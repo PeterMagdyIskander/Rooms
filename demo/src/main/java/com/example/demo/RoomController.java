@@ -29,4 +29,9 @@ public class RoomController {
     public void addRoom(@RequestBody Room room) {
         roomService.addRoom(room);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE,value = "/rooms/{id}")
+    public void deleteRoom(@PathVariable String id) {
+        roomService.deleteRoom(id);
+    }
 }

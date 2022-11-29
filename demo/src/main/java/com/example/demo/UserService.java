@@ -17,6 +17,10 @@ public class UserService {
         return (List<Users>) userRepository.findAll();
     }
 
+    public List<Users> getUsersByRoom(String roomId) {
+        return (List<Users>) userRepository.findByRoomId(roomId);
+    }
+
     public Users getUser(String id) {
         return userRepository.findById(id).get();
     }

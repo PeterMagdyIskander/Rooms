@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends CrudRepository<Comment,String>{
     
-    public List<Comment> findByUserId(String UserId);
+    public List<Comment> findByUserId(String userId);
+    public List<Comment> findByRoomId(String roomId);
+    public List<Comment> findByCommentId(String commentId);
 }
