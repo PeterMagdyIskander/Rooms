@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     @RequestMapping("/comments/{id}")
-    public Comment getComment(@PathVariable String id) {
+    public CommentDTO getComment(@PathVariable String id) {
         return commentService.getComment(id);
     }
 

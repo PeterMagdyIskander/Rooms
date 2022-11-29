@@ -25,16 +25,19 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @RequestMapping("/rooms/{roomId}/users")
+    public List<Users> getUserInRoom(@PathVariable String roomId) {
+        return userService.getUsersByRoom(roomId);
+    }
+
     @RequestMapping(method = RequestMethod.PUT, value = "/rooms/{roomId}/users")
     public void AddUserToRoom(@RequestBody Users user,@PathVariable String roomId) {
         user.setRoom(new Room(roomId));
         userService.updateUser(user);
     }
 
-    @RequestMapping("/rooms/{roomId}/users")
-    public List<Users> getUserInRoom(@PathVariable String roomId) {
-        return userService.getUsersByRoom(roomId);
-    }
+   
+    
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public void addUser(@RequestBody Users user) {

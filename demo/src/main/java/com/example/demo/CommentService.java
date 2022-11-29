@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,9 @@ public class CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<Comment> getAllCommentsByUser(String userId) {
         return (List<Comment>) commentRepository.findByUserId(userId);
@@ -23,8 +27,10 @@ public class CommentService {
         return (List<Comment>) commentRepository.findByCommentId(commentId);
     }
 
-    public Comment getComment(String id) {
-        return commentRepository.findById(id).get();
+    public CommentDTO getComment(String id) {
+        CommentDTO commentDTO=modelMapper.map(commentRepository.findById(id).get(),CommentDTO.class);
+        // commentRepository.findById(id).get();
+        return commentDTO; 
     }
 
     public void addComment(Comment comment) {
