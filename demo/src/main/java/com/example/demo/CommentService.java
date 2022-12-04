@@ -44,8 +44,8 @@ public class CommentService {
         return modelMapper.map(commentRepository.findById(id).get(),CommentDTO.class);
     }
 
-    public void addComment(CommentDTO comment,String userId,String roomId,String parentCommentId) {
-        Comment commentEntity=new Comment(comment.getText(),new Users("", userId),new Room(roomId),new Comment("", parentCommentId));
+    public void addComment(CommentDTO comment,String parentCommentId) {
+        Comment commentEntity=new Comment(comment.getText(),comment.getCommentId(),new Users("", comment.getUserId()),new Room(comment.getRoomId()),new Comment("", parentCommentId));
         commentRepository.save(commentEntity);
     }
 

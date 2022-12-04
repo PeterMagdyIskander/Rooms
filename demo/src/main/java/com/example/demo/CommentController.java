@@ -34,21 +34,19 @@ public class CommentController {
         return commentService.getComment(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/rooms/{roomId}/users/{userId}/comments")
-    public void addComment(@RequestBody CommentDTO comment, @PathVariable String userId, @PathVariable String roomId) {
-        commentService.addComment(comment,userId,roomId,"");
+    @RequestMapping(method = RequestMethod.POST, value = "/comments")
+    public void addComment(@RequestBody CommentDTO comment) {
+        commentService.addComment(comment, "");
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/rooms/{roomId}/users/{userOwnerId}/comments/{parentCommentId}")
-    public void addReply(@RequestBody CommentDTO comment, @PathVariable String userOwnerId, @PathVariable String roomId,
-            @PathVariable String parentCommentId) {
-        commentService.addComment(comment,userOwnerId,roomId,parentCommentId);
+    @RequestMapping(method = RequestMethod.POST, value = "/comments/{parentCommentId}")
+    public void addReply(@RequestBody CommentDTO comment, @PathVariable String parentCommentId) {
+        commentService.addComment(comment, parentCommentId);
     }
-    
 
     // @RequestMapping(method = RequestMethod.PUT, value = "/comments/{id}")
     // public void updateComment(@RequestBody Comment comment) {
-    //     commentService.updateComment(comment);
+    // commentService.updateComment(comment);
     // }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{id}")
