@@ -15,17 +15,17 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping("/users/{userId}/comments")
-    public List<Comment> getAllCommentsByUser(@PathVariable String userId) {
+    public List<CommentDTO> getAllCommentsByUser(@PathVariable String userId) {
         return commentService.getAllCommentsByUser(userId);
     }
 
     @RequestMapping("/rooms/{roomId}/comments")
-    public List<Comment> getAllCommentsByRoom(@PathVariable String roomId) {
+    public List<CommentDTO> getAllCommentsByRoom(@PathVariable String roomId) {
         return commentService.getAllCommentsByRoom(roomId);
     }
 
     @RequestMapping("/comments/{id}/replies")
-    public List<Comment> getAllReplies(@PathVariable String id) {
+    public List<CommentDTO> getAllReplies(@PathVariable String id) {
         return commentService.getAllReplies(id);
     }
 
@@ -35,30 +35,21 @@ public class CommentController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/rooms/{roomId}/users/{userId}/comments")
-    public void addComment(@RequestBody Comment comment, @PathVariable String userId, @PathVariable String roomId) {
-        
-        comment.setUser(new Users("", userId));
-        comment.setRoom(new Room(roomId));
-
-        commentService.addComment(comment);
+    public void addComment(@RequestBody CommentDTO comment, @PathVariable String userId, @PathVariable String roomId) {
+        commentService.addComment(comment,userId,roomId,"");
     }
 
-    // this is the id of the user who's writing the comment
     @RequestMapping(method = RequestMethod.POST, value = "/rooms/{roomId}/users/{userOwnerId}/comments/{parentCommentId}")
-    public void addReply(@RequestBody Comment comment, @PathVariable String userOwnerId, @PathVariable String roomId,
+    public void addReply(@RequestBody CommentDTO comment, @PathVariable String userOwnerId, @PathVariable String roomId,
             @PathVariable String parentCommentId) {
-        comment.setUser(new Users("", userOwnerId));
-        comment.setRoom(new Room(roomId));
-        comment.setComment(new Comment("", parentCommentId));
-        commentService.addComment(comment);
+        commentService.addComment(comment,userOwnerId,roomId,parentCommentId);
     }
+    
 
-    //or make it with requestBody
-
-    @RequestMapping(method = RequestMethod.PUT, value = "/comments/{id}")
-    public void updateComment(@RequestBody Comment comment) {
-        commentService.updateComment(comment);
-    }
+    // @RequestMapping(method = RequestMethod.PUT, value = "/comments/{id}")
+    // public void updateComment(@RequestBody Comment comment) {
+    //     commentService.updateComment(comment);
+    // }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{id}")
     public void deleteComment(@PathVariable String id) {

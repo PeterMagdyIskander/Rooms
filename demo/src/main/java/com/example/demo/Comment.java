@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -8,6 +10,7 @@ import javax.persistence.ManyToOne;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String text;
 
@@ -25,6 +28,13 @@ public class Comment {
     public Comment(String text, String id) {
         this.id = id;
         this.text = text;
+    }
+    
+    public Comment(String text, Users user, Room room, Comment comment) {
+        this.text = text;
+        this.user = user;
+        this.room = room;
+        this.comment = comment;
     }
     public String getText() {
         return text;

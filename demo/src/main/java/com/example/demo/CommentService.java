@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -15,31 +16,43 @@ public class CommentService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<Comment> getAllCommentsByUser(String userId) {
-        return (List<Comment>) commentRepository.findByUserId(userId);
+    public List<CommentDTO> getAllCommentsByUser(String userId) {
+        List<CommentDTO> comments=new ArrayList<>();
+        for(Comment c:commentRepository.findByUserId(userId)){
+            comments.add(modelMapper.map(c, CommentDTO.class));
+        };
+        return comments;
     }
 
-    public List<Comment> getAllCommentsByRoom(String roomId) {
-        return (List<Comment>) commentRepository.findByRoomId(roomId);
+    public List<CommentDTO> getAllCommentsByRoom(String roomId) {
+        List<CommentDTO> comments=new ArrayList<>();
+        for(Comment c:commentRepository.findByRoomId(roomId)){
+            comments.add(modelMapper.map(c, CommentDTO.class));
+        };
+        return comments;
     }
 
-    public List<Comment> getAllReplies(String commentId){
-        return (List<Comment>) commentRepository.findByCommentId(commentId);
+    public List<CommentDTO> getAllReplies(String commentId){
+        List<CommentDTO> comments=new ArrayList<>();
+        for(Comment c:commentRepository.findByCommentId(commentId)){
+            comments.add(modelMapper.map(c, CommentDTO.class));
+        };
+        return comments;
     }
 
     public CommentDTO getComment(String id) {
-        CommentDTO commentDTO=modelMapper.map(commentRepository.findById(id).get(),CommentDTO.class);
-        // commentRepository.findById(id).get();
-        return commentDTO; 
+        return modelMapper.map(commentRepository.findById(id).get(),CommentDTO.class);
     }
 
-    public void addComment(Comment comment) {
-        commentRepository.save(comment);
+    public void addComment(CommentDTO comment,String userId,String roomId,String parentCommentId) {
+        Comment commentEntity=new Comment(comment.getText(),new Users("", userId),new Room(roomId),new Comment("", parentCommentId));
+        commentRepository.save(commentEntity);
     }
 
-    public void updateComment(Comment comment){
-        commentRepository.save(comment);
-    }
+    // public void updateComment(CommentDTO comment){
+    //     Comment commentEntity=new Comment(comment.getText(),new Users("", comment.getUserId()),new Room(comment.getRoomId()),comment.getReplies());
+    //     commentRepository.save(commentEntity);
+    // }
 
     public void deleteComment(String id){
         commentRepository.deleteById(id);
