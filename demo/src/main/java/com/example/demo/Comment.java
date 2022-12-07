@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public class Comment {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String text;
 
