@@ -14,6 +14,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+
     private String name;
 
     @ManyToOne
@@ -22,9 +23,8 @@ public class Users {
     public Users() {
     }
 
-    public Users(String name, String id) {
+    public Users(String name) {
         this.name = name;
-        this.id = id;
     }
 
     public String getName() {

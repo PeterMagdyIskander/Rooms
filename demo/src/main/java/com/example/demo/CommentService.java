@@ -14,6 +14,9 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     public List<CommentDTO> getAllCommentsByUser(String userId) {
@@ -45,7 +48,8 @@ public class CommentService {
     }
 
     public void addComment(CommentDTO comment,String parentCommentId) {
-        Comment commentEntity=new Comment(comment.getText(),comment.getCommentId(),new Users("", comment.getUserId()),new Room(comment.getRoomId()),new Comment("", parentCommentId));
+        Users userEntity=userRepository.findByName(parentCommentId);
+        Comment commentEntity=new Comment(comment.getText(),comment.getCommentId(),userEntity,new Room(comment.getRoomId()),new Comment("", parentCommentId));
         commentRepository.save(commentEntity);
     }
 

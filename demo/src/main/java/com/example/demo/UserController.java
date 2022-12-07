@@ -16,40 +16,30 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/users")
-    public List<Users> getUsers() {
+    public List<UserDTO> getUsers() {
         return userService.getUsers();
     }
 
     @RequestMapping("/users/{id}")
-    public Users getUser(@PathVariable String id) {
+    public UserDTO getUser(@PathVariable String id) {
         return userService.getUser(id);
     }
 
     @RequestMapping("/rooms/{roomId}/users")
-    public List<Users> getUserInRoom(@PathVariable String roomId) {
+    public List<UserDTO> getUserInRoom(@PathVariable String roomId) {
         return userService.getUsersByRoom(roomId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/rooms/{roomId}/users")
-    public void AddUserToRoom(@RequestBody Users user,@PathVariable String roomId) {
-        user.setRoom(new Room(roomId));
-        userService.updateUser(user);
+    public void AddUserToRoom(@RequestBody UserDTO user,@PathVariable String roomId) {
+        userService.updateUser(user,roomId);
     }
 
    
-    
-
     @RequestMapping(method = RequestMethod.POST, value = "/users")
-    public void addUser(@RequestBody Users user) {
+    public void addUser(@RequestBody UserDTO user) {
         userService.addUser(user);
     }
-
-    @RequestMapping(method = RequestMethod.PUT, value = "/users")
-    public void updateUser(@RequestBody Users user) {
-        userService.updateUser(user);
-    }
-
-    
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
     public void deleteUser(@PathVariable String id) {

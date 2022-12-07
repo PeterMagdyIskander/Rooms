@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +14,38 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public List<Users> getUsers() {
-        return (List<Users>) userRepository.findAll();
+    public List<UserDTO> getUsers() {
+        List<UserDTO> users=new ArrayList<>();
+        for(Users u:userRepository.findAll()){
+            users.add(modelMapper.map(u, UserDTO.class));
+        };
+        return users;
     }
 
-    public List<Users> getUsersByRoom(String roomId) {
-        return (List<Users>) userRepository.findByRoomId(roomId);
+    public List<UserDTO> getUsersByRoom(String roomId) {
+        List<UserDTO> users=new ArrayList<>();
+        for(Users u:userRepository.findByRoomId(roomId)){
+            users.add(modelMapper.map(u, UserDTO.class));
+        };
+        return users;
     }
 
-    public Users getUser(String id) {
-        return userRepository.findById(id).get();
+    public UserDTO getUser(String id) {
+        return modelMapper.map(userRepository.findById(id).get(),UserDTO.class) ;
     }
 
-    public void addUser(Users user) {
-        userRepository.save(user);
+    public void addUser(UserDTO user) {
+        Users userEntity=new Users(user.getName());
+        userRepository.save(userEntity);
     }
 
-    public void updateUser(Users user){
-        userRepository.save(user);
+    public void updateUser(UserDTO user,String roomId){
+        Users userEntity=userRepository.findByName(user.getName());
+        userEntity.setRoom(new Room(roomId));
+        userRepository.save(userEntity);
     }
 
     public void deleteUser(String id){
