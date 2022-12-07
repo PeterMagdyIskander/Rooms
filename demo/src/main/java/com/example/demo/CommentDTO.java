@@ -3,11 +3,11 @@ package com.example.demo;
 import java.util.List;
 
 public class CommentDTO {
-    private String commentId;
     private String text;
-    private String userId;
+    private String userName;
     private String roomId;
     private List<CommentDTO> replies;
+    private Long id;
 
     public String getText() {
         return text;
@@ -22,18 +22,12 @@ public class CommentDTO {
     public void setReplies(List<CommentDTO> replies) {
         this.replies = replies;
     }
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
     
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getCommentId() {
-        return commentId;
-    }
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
     public String getRoomId() {
         return roomId;
@@ -41,5 +35,12 @@ public class CommentDTO {
     public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     
 }

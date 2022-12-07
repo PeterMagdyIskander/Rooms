@@ -25,22 +25,22 @@ public class CommentController {
     }
 
     @RequestMapping("/comments/{id}/replies")
-    public List<CommentDTO> getAllReplies(@PathVariable String id) {
+    public List<CommentDTO> getAllReplies(@PathVariable Long id) {
         return commentService.getAllReplies(id);
     }
 
     @RequestMapping("/comments/{id}")
-    public CommentDTO getComment(@PathVariable String id) {
+    public CommentDTO getComment(@PathVariable Long id) {
         return commentService.getComment(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/comments")
     public void addComment(@RequestBody CommentDTO comment) {
-        commentService.addComment(comment, "");
+        commentService.addComment(comment, null);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/comments/{parentCommentId}")
-    public void addReply(@RequestBody CommentDTO comment, @PathVariable String parentCommentId) {
+    public void addReply(@RequestBody CommentDTO comment, @PathVariable Long parentCommentId) {
         commentService.addComment(comment, parentCommentId);
     }
 
@@ -50,7 +50,7 @@ public class CommentController {
     // }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{id}")
-    public void deleteComment(@PathVariable String id) {
+    public void deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
     }
 }

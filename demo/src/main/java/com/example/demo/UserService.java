@@ -33,8 +33,8 @@ public class UserService {
         return users;
     }
 
-    public UserDTO getUser(String id) {
-        return modelMapper.map(userRepository.findById(id).get(),UserDTO.class) ;
+    public UserDTO getUser(String name) {
+        return modelMapper.map(userRepository.findByName(name),UserDTO.class) ;
     }
 
     public void addUser(UserDTO user) {
@@ -48,7 +48,7 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public void deleteUser(String id){
+    public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
   

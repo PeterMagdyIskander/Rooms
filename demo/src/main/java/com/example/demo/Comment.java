@@ -11,7 +11,7 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private long id;
     private String text;
 
     @ManyToOne
@@ -25,13 +25,14 @@ public class Comment {
 
     public Comment() {
     }
-    public Comment(String text, String id) {
-        this.id = id;
+    public Comment(Long id) {
+        this.id=id;
+    }
+    public Comment(String text) {
         this.text = text;
     }
     
-    public Comment(String text, String id, Users user, Room room, Comment comment) {
-        this.id = id;
+    public Comment(String text, Users user, Room room, Comment comment) {
         this.text = text;
         this.user = user;
         this.room = room;
@@ -43,10 +44,10 @@ public class Comment {
     public void setText(String text) {
         this.text = text;
     }
-    public String getId() {
+    public long getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
     public Users getUser() {

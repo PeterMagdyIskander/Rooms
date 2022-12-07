@@ -20,14 +20,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @RequestMapping("/users/{id}")
-    public UserDTO getUser(@PathVariable String id) {
-        return userService.getUser(id);
-    }
-
-    @RequestMapping("/rooms/{roomId}/users")
-    public List<UserDTO> getUserInRoom(@PathVariable String roomId) {
-        return userService.getUsersByRoom(roomId);
+    @RequestMapping("/users/{name}")
+    public UserDTO getUser(@PathVariable String name) {
+        return userService.getUser(name);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/rooms/{roomId}/users")
@@ -35,6 +30,13 @@ public class UserController {
         userService.updateUser(user,roomId);
     }
 
+
+    @RequestMapping("/rooms/{roomId}/users")
+    public List<UserDTO> getUserInRoom(@PathVariable String roomId) {
+        return userService.getUsersByRoom(roomId);
+    }
+
+    
    
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public void addUser(@RequestBody UserDTO user) {
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
-    public void deleteUser(@PathVariable String id) {
+    public void deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
     }
 }

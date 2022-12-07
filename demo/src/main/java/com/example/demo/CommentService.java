@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class CommentService {
 
     public List<CommentDTO> getAllCommentsByUser(String userId) {
         List<CommentDTO> comments=new ArrayList<>();
-        for(Comment c:commentRepository.findByUserId(userId)){
+        Users userEntity=userRepository.findByName(userId);
+        for(Comment c:commentRepository.findByUserId(userEntity.getId())){
             comments.add(modelMapper.map(c, CommentDTO.class));
         };
         return comments;
@@ -35,7 +37,7 @@ public class CommentService {
         return comments;
     }
 
-    public List<CommentDTO> getAllReplies(String commentId){
+    public List<CommentDTO> getAllReplies(Long commentId){
         List<CommentDTO> comments=new ArrayList<>();
         for(Comment c:commentRepository.findByCommentId(commentId)){
             comments.add(modelMapper.map(c, CommentDTO.class));
@@ -43,14 +45,25 @@ public class CommentService {
         return comments;
     }
 
-    public CommentDTO getComment(String id) {
-        return modelMapper.map(commentRepository.findById(id).get(),CommentDTO.class);
+    public CommentDTO getComment(Long id) {
+        CommentDTO commentDTO=modelMapper.map(commentRepository.findById(id).get(),CommentDTO.class);
+        List<CommentDTO> comments=new ArrayList<>();
+        for(Comment c:commentRepository.findByCommentId(commentDTO.getId())){
+            comments.add(modelMapper.map(c, CommentDTO.class));
+        };
+        commentDTO.setReplies(comments);
+        return commentDTO;
     }
 
-    public void addComment(CommentDTO comment,String parentCommentId) {
-        Users userEntity=userRepository.findByName(parentCommentId);
-        Comment commentEntity=new Comment(comment.getText(),comment.getCommentId(),userEntity,new Room(comment.getRoomId()),new Comment("", parentCommentId));
+    public void addComment(CommentDTO comment,Long parentCommentId) {
+        Users userEntity=userRepository.findByName(comment.getUserName());
+        // Comment commentEntity=new Comment(comment.getText(),comment.getCommentId(),userEntity,new Room(comment.getRoomId()),new Comment("", parentCommentId));
+        Comment commentEntity=new Comment(comment.getText());
+        commentEntity.setRoom(new Room(comment.getRoomId()));
+        commentEntity.setUser(userEntity);
+        commentEntity.setComment(new Comment(parentCommentId));
         commentRepository.save(commentEntity);
+        
     }
 
     // public void updateComment(CommentDTO comment){
@@ -58,7 +71,7 @@ public class CommentService {
     //     commentRepository.save(commentEntity);
     // }
 
-    public void deleteComment(String id){
+    public void deleteComment(Long id){
         commentRepository.deleteById(id);
     }
 }
